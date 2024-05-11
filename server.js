@@ -15,7 +15,7 @@ const users = {};
 
 // Function to check if a username is already taken
 function isUsernameTaken(username) {
-    return Object.values(users).includes(username);
+    return Object.values(users).some(user => user.username === username);
 }
 
 io.on('connection', (socket) => {
@@ -34,8 +34,10 @@ io.on('connection', (socket) => {
     // Event handler for username selection
     socket.on('username', (username) => {
         if (!isUsernameTaken(username)) {
-            users[userId] = username; // Store username associated with socket ID
-            console.log(`User ${userId} chose username: ${username}`);
+            users[userId] = { // Store username and IP associated with socket ID
+                username: username,
+                ipv4Address: ipv4Address
+            };
             socket.emit('usernameAccepted', username); // Send acknowledgment to client
         } else {
             socket.emit('usernameError', 'Username is already taken');
@@ -44,8 +46,9 @@ io.on('connection', (socket) => {
 
     // Event handler for chat messages
     socket.on('chat message', (message) => {
-        const username = users[userId]; // Retrieve username associated with socket ID
-        if (username) {
+        const user = users[userId]; // Retrieve user associated with socket ID
+        if (user) {
+            const username = user.username;
             io.emit('chat message', { username, message }); // Broadcast message to all clients
             console.log('chat message', { username, message }); // Broadcast message to all clients
         }
@@ -53,8 +56,9 @@ io.on('connection', (socket) => {
 
     // Event handler for disconnections
     socket.on('disconnect', () => {
-        const username = users[userId];
-        if (username) {
+        const user = users[userId];
+        if (user) {
+            const username = user.username;
             console.log(`User ${userId} (${username}) disconnected`);
             delete users[userId]; // Remove user from the users object
         }
