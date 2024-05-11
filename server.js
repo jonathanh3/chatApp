@@ -1,7 +1,7 @@
 const express = require('express');
 const http = require('http');
 const socketIO = require('socket.io');
-const path = require('path'); // Import the 'path' module
+const path = require('path');
 
 const app = express();
 const server = http.createServer(app);
@@ -18,19 +18,7 @@ function isUsernameTaken(username) {
     return Object.values(users).some(user => user.username === username);
 }
 
-io.on('connection', (socket) => {
-
-    const userId= socket.id;
-
-    const userIP = socket.handshake.address;
-    const ipv4Regex = /^::ffff:(\d+\.\d+\.\d+\.\d+)$/;
-    const matches = userIP.match(ipv4Regex);
-    const ipv4Address = matches ? matches[1] : userIP;
-
-    console.log(`User connected: ${userId}`);
-    console.log(`User connected from IPv4: ${ipv4Address}`);
-    console.log(users)
-
+function usernameEventHandler(socket, userId, ipv4Address) {
     // Event handler for username selection
     socket.on('username', (username) => {
         if (!isUsernameTaken(username)) {
@@ -43,7 +31,9 @@ io.on('connection', (socket) => {
             socket.emit('usernameError', 'Username is already taken');
         }
     });
+}
 
+function messagesEventHandler(socket, userId){
     // Event handler for chat messages
     socket.on('chat message', (message) => {
         const user = users[userId]; // Retrieve user associated with socket ID
@@ -53,7 +43,9 @@ io.on('connection', (socket) => {
             console.log('chat message', { username, message }); // Broadcast message to all clients
         }
     });
+}
 
+function disconnectEventHandler(socket, userId) {
     // Event handler for disconnections
     socket.on('disconnect', () => {
         const user = users[userId];
@@ -63,6 +55,25 @@ io.on('connection', (socket) => {
             delete users[userId]; // Remove user from the users object
         }
     });
+}
+
+io.on('connection', (socket) => {
+
+    const userId= socket.id;
+    const userIP = socket.handshake.address;
+    const ipv4Regex = /^::ffff:(\d+\.\d+\.\d+\.\d+)$/;
+    const matches = userIP.match(ipv4Regex);
+    const ipv4Address = matches ? matches[1] : userIP;
+
+    console.log(`User connected: ${userId}`);
+    console.log(`User connected from IPv4: ${ipv4Address}`);
+
+    usernameEventHandler(socket, userId, ipv4Address);
+
+    messagesEventHandler(socket, userId);
+
+    disconnectEventHandler(socket, userId)
+
 });
 
 server.listen(PORT, () => {
