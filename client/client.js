@@ -24,6 +24,10 @@ function renderUserList() {
     });
 }
 
+function getMessageText(msgObj) {
+    return `${msgObj.timestamp} - ${msgObj.username}: ${msgObj.message}`;
+}
+
 // Event listener for username form submission
 usernameForm.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -44,9 +48,9 @@ messageForm.addEventListener('submit', (e) => {
 });
 
 // Listen for chat messages
-socket.on('chat message', (data) => {
+socket.on('chat message', (msgObj) => {
     const item = document.createElement('li');
-    item.textContent = `${data.username}: ${data.message}`;
+    item.textContent = getMessageText(msgObj);
     messages.appendChild(item);
 });
 
@@ -81,4 +85,15 @@ socket.on('usernameError', (errorMessage) => {
 socket.on('update user list', (userList) => {
     activeUsers = userList;
     renderUserList();
+});
+
+socket.on('load messages', (data) => {
+    messages.innerHTML = ''; 
+
+    data.forEach((msgObj) =>{
+        const listItem = document.createElement('li');
+        const messageText = getMessageText(msgObj)
+        listItem.textContent = messageText;
+        messages.appendChild(listItem);
+    })
 });
