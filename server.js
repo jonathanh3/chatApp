@@ -27,6 +27,7 @@ function usernameEventHandler(socket, userId, ipv4Address) {
                 ipv4Address: ipv4Address
             };
             socket.emit('usernameAccepted', username); // Send acknowledgment to client
+            io.emit('update user list', Object.values(users).map(user => user.username)); // Send update to all connected clients
         } else {
             socket.emit('usernameError', 'Username is already taken');
         }
@@ -53,6 +54,7 @@ function disconnectEventHandler(socket, userId) {
             const username = user.username;
             console.log(`User ${userId} (${username}) disconnected`);
             delete users[userId]; // Remove user from the users object
+            io.emit('update user list', Object.values(users).map(user => user.username)); // Send update to all connected clients
         }
     });
 }
@@ -69,9 +71,7 @@ io.on('connection', (socket) => {
     console.log(`User connected from IPv4: ${ipv4Address}`);
 
     usernameEventHandler(socket, userId, ipv4Address);
-
     messagesEventHandler(socket, userId);
-
     disconnectEventHandler(socket, userId)
 
 });

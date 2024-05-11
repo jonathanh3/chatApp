@@ -1,13 +1,28 @@
 const socket = io();
 const usernameForm = document.querySelector('#username-form');
 const messageForm = document.querySelector('#message-form');
-const usernameInput = document.querySelector('#username');
+const usernameInput = document.querySelector('#username-input');
 const messageInput = document.querySelector('#m');
 const messages = document.querySelector('#messages');
+const usernameParagraph = document.querySelector('#username-paragraph');
+const usersList = document.querySelector('#active-users');
+let activeUsers = [];
 
 // Disable message input and send button initially
 messageInput.disabled = true;
 messageForm.querySelector('button').disabled = true;
+
+// Function to render the user list in the UI
+function renderUserList() {
+    // Clear the existing user list
+    usersList.innerHTML = '';
+    // Add each user to the list
+    activeUsers.forEach(username => {
+        const listItem = document.createElement('li');
+        listItem.textContent = username;
+        usersList.appendChild(listItem);
+    });
+}
 
 // Event listener for username form submission
 usernameForm.addEventListener('submit', (e) => {
@@ -28,7 +43,7 @@ messageForm.addEventListener('submit', (e) => {
     }
 });
 
-// Chat message
+// Listen for chat messages
 socket.on('chat message', (data) => {
     const item = document.createElement('li');
     item.textContent = `${data.username}: ${data.message}`;
@@ -38,6 +53,7 @@ socket.on('chat message', (data) => {
 // Username accepted by server
 socket.on('usernameAccepted', (username) => {
     console.log(`Username accepted: ${username}`);
+    usernameParagraph.textContent = `Your username: ${username}`
     usernameForm.style.display = 'none'; // Hide username form
     messageInput.disabled = false;
     messageForm.querySelector('button').disabled = false;
@@ -59,4 +75,10 @@ socket.on('usernameError', (errorMessage) => {
     usernameInput.value = '';
     // Show the username form to allow user to try again
     usernameForm.style.display = 'block';
+});
+
+// Inside the 'socket.on('update user list', (userList) => {...})' event handler
+socket.on('update user list', (userList) => {
+    activeUsers = userList;
+    renderUserList();
 });

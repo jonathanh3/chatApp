@@ -8,7 +8,7 @@
 
     <!-- username form -->
     <form id="username-form">
-        <input id="username" type="text" placeholder="Enter your username" required>
+        <input id="username-input" type="text" placeholder="Enter your username" required>
         <button type="submit">Set Username</button>
     </form>
     <div id="username-error" style="color: red;"></div> <!-- Error message container -->
@@ -18,9 +18,13 @@
 
     <!-- messages form -->
     <form id="message-form" style="display: none;"> <!-- Hide this form initially -->
+        <p id="username-paragraph"></p>
         <input id="m" type="text" placeholder="Type your message" autocomplete="off" required>
         <button type="submit">Send</button>
     </form>
+
+    <h2>Active users</h2>
+    <ul id="active-users"></ul>
 
     <script src="/socket.io/socket.io.js"></script>
     <script src="client.js"></script>
