@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat App</title>
+</head>
+<body>
+    <h1>Chat App</h1>
+
+    <!-- username form -->
+    <form id="username-form">
+        <input id="username" type="text" placeholder="Enter your username" required>
+        <button type="submit">Set Username</button>
+    </form>
+    <div id="username-error" style="color: red;"></div> <!-- Error message container -->
+
+    <!-- messages -->
+    <ul id="messages"></ul>
+
+    <!-- messages form -->
+    <form id="message-form" style="display: none;"> <!-- Hide this form initially -->
+        <input id="m" type="text" placeholder="Type your message" autocomplete="off" required>
+        <button type="submit">Send</button>
+    </form>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="client.js"></script>
+</body>
+</html>
