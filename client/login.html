@@ -11,10 +11,7 @@
         <button type="submit">Login</button>
     </form>
 
-    <script src="/socket.io/socket.io.js"></script>
     <script>
-        const socket = io();
-
         // Event listener for the login form submission
         document.getElementById('login-form').addEventListener('submit', async (e) => {
             e.preventDefault(); // Prevent form submission
@@ -32,13 +29,6 @@
             });
 
             if (response.ok) {
-                // Login successful
-                const user = await response.json();
-
-                // Emit 'userLogin' event to server
-                socket.emit('userLogin', user);
-
-                // Redirect to chat page or perform other actions
                 window.location.href = '/chat';
             } else {
                 // Handle login failure

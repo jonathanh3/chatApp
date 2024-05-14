@@ -16,7 +16,7 @@ app.use(sessionMiddleware);
 app.use('/', routes);
 app.use(express.static(path.join(__dirname, '../', 'client')))
 
-initializeSocket(http);
+initializeSocket(http, sessionMiddleware);
 
 http.listen(PORT, () => {
   console.log(`Server is running on ${PORT}`);

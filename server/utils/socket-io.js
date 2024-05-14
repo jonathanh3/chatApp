@@ -1,47 +1,58 @@
 let io;
 let connectedUsers = {};
 
-function initializeSocket(server) {
-    
+function updateActiveUsersList(socket, usernames) {
+    io.emit('updateActiveUsers', usernames);
+}
+
+function handleChatMessage(socket, userId) {
+    const timestamp = new Date().toLocaleString('en-US', { timeZone: 'UTC', hour12: false });
+
+    socket.on('chatMessage', (message) => {
+        let msgObj = { timestamp: timestamp, username: connectedUsers[userId], message: message };
+        io.emit('chatMessage', msgObj); // Broadcast message to all clients
+    });
+}
+
+function handleDisconnect(socket, userId) {
+    socket.on('disconnect', () => {
+        let username = connectedUsers[userId]
+        delete connectedUsers[userId];
+        console.log(`${username}(${userId}) disconnected`)
+    });
+}
+
+function initializeSocket(server, sessionMiddleware) { 
     io = require('socket.io')(server);
+
+
+    io.use((socket, next) => {
+        // Create a minimal res object with a setHeader method
+        const res = {
+            setHeader: () => {}, // A dummy method to satisfy Socket.IO
+        };
+
+        // Call the session middleware with both the req and res objects
+        sessionMiddleware(socket.request, res, next);
+    });
+
     io.on('connection', (socket) => {
-        // Handle user login event
-        handleUserLogin(socket);
+        if (socket.request.session.user) {
+            const userId = socket.id;
+            const username = socket.request.session.user.username;
+            
+            console.log(`${username}(${userId}) connected`)
+            connectedUsers[userId] = username;
 
-        // Handle chat message event
-        socket.on('chatMessage', (message) => {
-            io.emit('chatMessage', message); // Broadcast message to all clients
-        });
+            updateActiveUsersList(socket, Object.values(connectedUsers));
 
-        // Handle disconnection
-        socket.on('disconnect', () => {
-            handleDisconnect(socket);
-        });
+            // Handle chat message event
+            handleChatMessage(socket, userId);
+
+            // Handle disconnection
+            handleDisconnect(socket, userId);
+        }
     });
 }
 
-function handleUserLogin(socket) {
-    socket.on('userLogin', (user) => {
-        const userId = socket.id;
-        connectedUsers[userId] = user.username;
-        console.log(connectedUsers);
-        socket.user = user;
-    });
-}
-
-function handleDisconnect(socket) {
-    // console.info(`Client disconnected [id=${socket.id}]`);
-    // Remove the disconnected user from the connectedUsers object
-    const userId = socket.id;
-    delete connectedUsers[userId];
-}
-
-function emitUpdateActiveUsers(activeUsers) {
-    io.emit('updateActiveUsers', activeUsers);
-}
-
-function emitUserLogin(user) {
-    io.emit('userLogin', user);
-}
-
-module.exports = { initializeSocket, emitUpdateActiveUsers, emitUserLogin };
+module.exports = { initializeSocket };
