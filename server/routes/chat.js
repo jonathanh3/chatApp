@@ -7,10 +7,10 @@ const { requireLogin } = require('../middleware');
 router.get('/', requireLogin, (req, res) => {
 
     // Construct the path to index.html
-    const indexPath = path.join(__dirname, '../..', 'client', 'index.html');
+    const chatPath = path.join(__dirname, '../..', 'client', 'chat.html');
     
     // Send the index.html file as the response
-    res.sendFile(indexPath);
+    res.sendFile(chatPath);
 });
 
 module.exports = router;
