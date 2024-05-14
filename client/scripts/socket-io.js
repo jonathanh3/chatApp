@@ -1,6 +1,6 @@
 const socket = io();
 const messageForm = document.querySelector('#message-form');
-const messageInput = document.querySelector('#m');
+const messageInput = document.querySelector('#message-input');
 const messages = document.querySelector('#messages');
 const usernameParagraph = document.querySelector('#username-paragraph');
 const activeUsersList = document.querySelector('#active-users');
