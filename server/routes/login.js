@@ -23,13 +23,14 @@ router.get('/', (req, res) => {
   
 router.post('/', (req, res) => {
     const { username, password } = req.body;
+    // Perform authentication logic
     const user = users.find(u => u.username === username && u.password === password);
     if (user) {
-        // loggUserLogin(req, user);
-        req.session.user = user;    
-        // Send the user object as JSON in the response
-        res.status(200).json(user);
+        // Successful authentication
+        req.session.user = user;
+        res.redirect('/chat'); // Redirect to chat page after successful login
     } else {
+        // Failed authentication
         res.status(401).send('Invalid username or password');
     }
 });
