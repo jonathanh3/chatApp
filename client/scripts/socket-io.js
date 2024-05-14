@@ -42,7 +42,8 @@ socket.on('updateActiveUsers', (activeUsers) => {
     updateActiveUsersList(activeUsers);
 });
 
-socket.on('load messages', (data) => {
+// Listen for previousMessages
+socket.on('previousMessages', (data) => {
     messages.innerHTML = ''; 
 
     data.forEach((msgObj) =>{

@@ -1,15 +1,21 @@
 let io;
 let connectedUsers = {};
+let messages = [];
 
-function updateActiveUsersList(socket, usernames) {
+function emitActiveUsersList(usernames) {
     io.emit('updateActiveUsers', usernames);
 }
 
-function handleChatMessage(socket, userId) {
+function emitPreviousMessages() {
+    io.emit('previousMessages', messages);
+}
+
+function emitChatMessage(socket, userId) {
     const timestamp = new Date().toLocaleString('en-US', { timeZone: 'UTC', hour12: false });
 
     socket.on('chatMessage', (message) => {
         let msgObj = { timestamp: timestamp, username: connectedUsers[userId], message: message };
+        messages.push(msgObj);
         io.emit('chatMessage', msgObj); // Broadcast message to all clients
     });
 }
@@ -44,10 +50,11 @@ function initializeSocket(server, sessionMiddleware) {
             console.log(`${username}(${userId}) connected`)
             connectedUsers[userId] = username;
 
-            updateActiveUsersList(socket, Object.values(connectedUsers));
+            emitActiveUsersList(Object.values(connectedUsers));
 
-            // Handle chat message event
-            handleChatMessage(socket, userId);
+            emitPreviousMessages(); // Emit previous messages to the newly connected user
+
+            emitChatMessage(socket, userId);
 
             // Handle disconnection
             handleDisconnect(socket, userId);
