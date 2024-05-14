@@ -1,33 +1,47 @@
-// utils/socket-io.js
-
 let io;
-const connectedUsers = {};
+let connectedUsers = {};
 
 function initializeSocket(server) {
+    
     io = require('socket.io')(server);
     io.on('connection', (socket) => {
-        console.info(`Client connected [id=${socket.id}]`);
-        
-        socket.on('chat message', (message) => {
-            if (user) {
-                const username = user.username;
-                const msgObj = addMessage(user, message);
-                io.emit('chat message', { 
-                    username: msgObj.user.username, 
-                    message: msgObj.message,
-                    timestamp: msgObj.timestamp
-                }); // Broadcast message to all clients
-            }
+        // Handle user login event
+        handleUserLogin(socket);
+
+        // Handle chat message event
+        socket.on('chatMessage', (message) => {
+            io.emit('chatMessage', message); // Broadcast message to all clients
         });
 
+        // Handle disconnection
         socket.on('disconnect', () => {
-            console.info(`Client disconnected [id=${socket.id}]`);
+            handleDisconnect(socket);
         });
     });
+}
+
+function handleUserLogin(socket) {
+    socket.on('userLogin', (user) => {
+        const userId = socket.id;
+        connectedUsers[userId] = user.username;
+        console.log(connectedUsers);
+        socket.user = user;
+    });
+}
+
+function handleDisconnect(socket) {
+    // console.info(`Client disconnected [id=${socket.id}]`);
+    // Remove the disconnected user from the connectedUsers object
+    const userId = socket.id;
+    delete connectedUsers[userId];
 }
 
 function emitUpdateActiveUsers(activeUsers) {
     io.emit('updateActiveUsers', activeUsers);
 }
 
-module.exports = { initializeSocket, emitUpdateActiveUsers };
+function emitUserLogin(user) {
+    io.emit('userLogin', user);
+}
+
+module.exports = { initializeSocket, emitUpdateActiveUsers, emitUserLogin };

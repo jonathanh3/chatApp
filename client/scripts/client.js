@@ -25,13 +25,13 @@ messageForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const message = messageInput.value.trim();
     if (message) {
-        socket.emit('chat message', message); // Send chat message to server
+        socket.emit('chatMessage', message); // Send chat message to server
         messageInput.value = ''; // Clear message input field
     }
 });
 
 // Listen for chat messages
-socket.on('chat message', (msgObj) => {
+socket.on('chatMessage', (msgObj) => {
     const item = document.createElement('li');
     item.textContent = getMessageText(msgObj);
     messages.appendChild(item);

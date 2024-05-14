@@ -10,10 +10,12 @@ const sessionMiddleware = require('./config/session');
 const routes = require('./routes');
 const { initializeSocket } = require('./utils/socket-io');
 
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(sessionMiddleware);
 app.use('/', routes);
 app.use(express.static(path.join(__dirname, '../', 'client')))
+
 initializeSocket(http);
 
 http.listen(PORT, () => {
