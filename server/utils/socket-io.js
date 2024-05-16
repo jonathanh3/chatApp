@@ -2,8 +2,12 @@ let io;
 let connectedUsers = {};
 let messages = [];
 
-function emitActiveUsersList(usernames) {
-    io.emit('updateActiveUsers', usernames);
+
+function emitActiveUsersList(userId, username) {
+    connectedUsers[userId] = username;
+    allUsernames = Object.values(connectedUsers);
+    uniqueUsernames = [...new Set(allUsernames)]; // Get all unqiue usernames
+    io.emit('updateActiveUsers', uniqueUsernames);
 }
 
 function emitPreviousMessages() {
@@ -24,7 +28,7 @@ function handleDisconnect(socket, userId) {
     socket.on('disconnect', () => {
         let username = connectedUsers[userId]
         delete connectedUsers[userId];
-        console.log(`${username}(${userId}) disconnected`)
+        console.log(`${username}(${userId}) disconnected`);
     });
 }
 
@@ -48,9 +52,8 @@ function initializeSocket(server, sessionMiddleware) {
             const username = socket.request.session.user.username;
             
             console.log(`${username}(${userId}) connected`)
-            connectedUsers[userId] = username;
 
-            emitActiveUsersList(Object.values(connectedUsers));
+            emitActiveUsersList(userId, username);
 
             emitPreviousMessages(); // Emit previous messages to the newly connected user
 
