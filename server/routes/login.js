@@ -2,7 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const path = require('path');
-const { users, addActiveUser, getActivesUsernames } = require('../data/users');
+const { users } = require('../data/users');
 
 function loggUserLogin(req, user) {
 	const userIP = req.ip;
@@ -28,7 +28,7 @@ router.post('/', (req, res) => {
     if (user) {
         // Successful authentication
         req.session.user = user;
-        res.redirect('/chat'); // Redirect to chat page after successful login
+        res.redirect('/chat');
     } else {
         // Failed authentication
         res.status(401).send('Invalid username or password');

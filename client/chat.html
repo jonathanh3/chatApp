@@ -7,28 +7,33 @@
     <title>Chat App</title>
 </head>
 <body>
-    <h1>Chat App</h1>
+    <nav class="navbar">
+        <div class="navbar-brand">Chat App</div>
+        <div class="navbar-user" id="navbar-user"></div>
+        <button class="logout-button" id="logout-button">Logout</button>
+    </nav>
+    
+    <div class="app-wrapper">
+        <div class="container">
+            <div class="chat-container">
+                <!-- messages -->
+                <ul id="messages"></ul>
 
-    <div class="container">
-        <div class="chat-container">
-            <!-- messages -->
-            <ul id="messages"></ul>
+                <!-- messages form -->
+                <form id="message-form">
+                    <input id="message-input" type="text" placeholder="Type your message" autocomplete="off" required>
+                    <button type="submit">Send</button>
+                </form>
+            </div>
 
-            <!-- messages form -->
-            <form id="message-form">
-                <p id="username-paragraph"></p>
-                <input id="message-input" type="text" placeholder="Type your message" autocomplete="off" required>
-                <button type="submit">Send</button>
-            </form>
-        </div>
-
-        <div class="active-users-container">
-            <h2>Active users</h2>
-            <ul id="active-users"></ul>
+            <div class="active-users-container">
+                <h2>Active users</h2>
+                <ul id="active-users"></ul>
+            </div>
         </div>
     </div>
 
     <script src="/socket.io/socket.io.js"></script>
-    <script src="scripts/socket-io.js"></script>
+    <script src="scripts/chat.js"></script>
 </body>
 </html>

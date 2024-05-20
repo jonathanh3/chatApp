@@ -1,80 +1,182 @@
-/* Reset styles */
-* {
-    box-sizing: border-box;
+/* chat.css */
+
+/* Reset some default styles */
+body, h1, h2, ul, form, p, nav, button {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
+/* General styles */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f8f9fa;
-    padding: 20px;
-}
-
-.container {
+    background-color: #f0f0f0;
     display: flex;
-}
-
-.chat-container {
-    flex: 2;
-    margin-right: 20px;
-}
-
-.active-users-container {
-    flex: 1;
-}
-
-h1 {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-li {
-    margin-bottom: 10px;
-}
-
-#message-form {
-    display: flex;
+    flex-direction: column;
     align-items: center;
+    height: 100vh;
+    color: #333;
 }
 
-#message-form input[type="text"] {
-    flex: 1;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-#message-form button {
+/* Navbar styling */
+.navbar {
+    width: 100%;
+    background-color: #3498db;
+    color: white;
     padding: 10px 20px;
-    margin-left: 10px;
-    background-color: #007bff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    z-index: 1;
+}
+
+.navbar-brand {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.navbar-user {
+    font-size: 1em;
+}
+
+.logout-button {
+    background-color: #e74c3c;
+    color: white;
     border: none;
-    border-radius: 5px;
-    color: #fff;
+    padding: 10px 20px;
+    border-radius: 4px;
     cursor: pointer;
 }
 
-#message-form button:hover {
-    background-color: #0056b3;
+.logout-button:hover {
+    background-color: #c0392b;
+}
+
+/* App wrapper styling */
+.app-wrapper {
+    width: 80%;
+    max-width: 1200px;
+    margin-top: 60px; /* Adjust this margin to fit the navbar height */
+}
+
+/* Container styling */
+.container {
+    display: flex;
+    height: calc(100vh - 60px);
+    background: white;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* Active users section */
+.active-users-container {
+    width: 25%;
+    background-color: #2c3e50;
+    color: white;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.active-users-container h2 {
+    margin-bottom: 20px;
+    font-size: 1.2em;
 }
 
 #active-users {
-    padding: 10px;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    list-style: none;
+    overflow-y: auto;
+    flex-grow: 1;
+    padding: 0;
+    margin: 0;
 }
 
 #active-users li {
-    margin-bottom: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #34495e;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+    cursor: pointer;
 }
 
-#username-paragraph {
+#active-users li:hover {
+    background-color: #3a6b8f;
+}
+
+/* Chat section */
+.chat-container {
+    width: 75%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+#messages {
+    list-style: none;
+    flex-grow: 1;
+    padding: 20px;
+    overflow-y: auto;
+    background-color: #ecf0f1;
+}
+
+#messages li {
+    padding: 10px;
     margin-bottom: 10px;
+    background-color: #ffffff;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Message form */
+#message-form {
+    display: flex;
+    padding: 20px;
+    background-color: #ecf0f1;
+    border-top: 1px solid #bdc3c7;
+    bottom: 0;
+    width: 100%;
+}
+
+#message-input {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #bdc3c7;
+    border-radius: 4px;
+    margin-right: 10px;
+}
+
+#message-input:focus {
+    outline: none;
+    border-color: #3498db;
+}
+
+button[type="submit"] {
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button[type="submit"]:hover {
+    background-color: #2980b9;
+}
+
+/* Scrollbar styling for a more modern look */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #bdc3c7;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #7f8c8d;
 }
