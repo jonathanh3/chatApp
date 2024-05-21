@@ -14,8 +14,5 @@ COPY server /usr/src/app/server
 # Install dependencies
 RUN npm install
 
-# Make port 3000 available to the world outside this container
-EXPOSE 3000
-
 # Define the command to run the app
 CMD [ "npm", "start" ]
