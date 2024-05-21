@@ -28,6 +28,7 @@ function handleDisconnect(socket, userId) {
     socket.on('disconnect', () => {
         let username = connectedUsers[userId]
         delete connectedUsers[userId];
+        io.emit('updateActiveUsers', Object.values(connectedUsers));
         console.log(`${username}(${userId}) disconnected`);
     });
 }

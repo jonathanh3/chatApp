@@ -6,5 +6,5 @@ function requireLogin(req, res, next) {
     }
   }
   
-  module.exports = { requireLogin };
+module.exports = { requireLogin };
   
