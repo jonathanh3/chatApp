@@ -12,13 +12,14 @@ router.get('/', (req, res) => {
 
 // Define routes
 const loginRouter = require('./login');
+const registerRouter = require('./register');
 const logoutRouter = require('./logout');
 const whoamiRouter = require('./whoami');
 const chatRouter = require('./chat');
 
 // The login route doesn't require authentication
 router.use('/login', loginRouter);
-
+router.use('/register', registerRouter);
 // Apply requireLogin middleware to routes that require authentication
 router.use('/logout', requireLogin, logoutRouter);
 router.use('/whoami', requireLogin, whoamiRouter);
