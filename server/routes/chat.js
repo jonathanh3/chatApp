@@ -2,10 +2,8 @@
 const express = require('express');
 const router = express.Router();
 const path = require('path');
-const { requireLogin } = require('../middleware');
 
-router.get('/', requireLogin, (req, res) => {
-
+router.get('/', (req, res) => {
     // Construct the path to index.html
     const chatPath = path.join(__dirname, '../..', 'client', 'chat.html');
     

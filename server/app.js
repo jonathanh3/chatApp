@@ -1,23 +1,31 @@
-// app.js
-const express = require('express');
-const app = express();
-const http = require('http').Server(app);
-const path = require('path')
-const PORT = process.env.PORT || 3000;
+require('./config/env'); // Load environment variables
 
-const bodyParser = require('body-parser');
+const express = require('express');
+const http = require('http');
+const path = require('path');
+
 const sessionMiddleware = require('./config/session');
+const initializeMiddleware = require('./middleware');
 const routes = require('./routes');
 const { initializeSocket } = require('./utils/socket-io');
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+const app = express();
+const server = http.createServer(app);
+const PORT = process.env.PORT || 3000;
+
+// Initialize middleware
+initializeMiddleware(app);
 app.use(sessionMiddleware);
+
+// Configure routes
 app.use('/', routes);
-app.use(express.static(path.join(__dirname, '../', 'client')))
 
-initializeSocket(http, sessionMiddleware);
+// Serve static files
+app.use(express.static(path.join(__dirname, '../client')));
 
-http.listen(PORT, () => {
-  console.log(`Server is running on ${PORT}`);
+// Initialize WebSocket
+initializeSocket(server, sessionMiddleware);
+
+server.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
