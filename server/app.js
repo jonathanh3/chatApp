@@ -21,7 +21,7 @@ app.use(sessionMiddleware);
 app.use('/', routes);
 
 // Serve static files
-app.use(express.static(path.join(__dirname, '../client')));
+app.use(express.static(path.join(__dirname, '../frontend')));
 
 // Initialize WebSocket
 initializeSocket(server, sessionMiddleware);

@@ -17,7 +17,7 @@ router.get('/', (req, res) => {
 		return res.redirect('/chat');
 	}
 
-	const loginPath = path.join(__dirname, '../..', 'client', 'login.html');
+	const loginPath = path.join(__dirname, '../..', 'frontend', 'login.html');
 	res.sendFile(loginPath);
 });
   

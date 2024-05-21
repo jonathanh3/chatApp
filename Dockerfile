@@ -8,7 +8,7 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 
 # Copy the rest of the application code to the working directory
-COPY client /usr/src/app/client
+COPY frontend /usr/src/app/frontend
 COPY server /usr/src/app/server
 
 # Install dependencies
