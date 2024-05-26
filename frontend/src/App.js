@@ -6,7 +6,6 @@ import PrivateRoute from './components/PrivateRoute';
 import PublicRoute from './components/PublicRoute';
 import NotFound from './components/NotFound';
 import { AuthProvider } from './contexts/AuthContext';
-import Navbar from './components/Navbar';
 
 const App = () => {
   return (

@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
+  // Ta bort React.StrictMode för att inte få två requests i början
   <React.StrictMode>
     <App />
   </React.StrictMode>
