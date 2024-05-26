@@ -1,4 +1,3 @@
-// src/components/Login.js
 import React, { useState } from 'react';
 import axios from 'axios';
 import { backendEndpoint } from '../config';
@@ -12,9 +11,13 @@ const Login = () => {
     event.preventDefault();
 
     try {
-      const response = await axios.post(`${backendEndpoint}/auth/login`,
-        { username, password}, 
-        { withCredentials: true }
+      const response = await axios.post(
+        `${backendEndpoint}/auth/login`,
+        JSON.stringify({ username, password }),
+        { 
+          headers: { 'Content-Type': 'application/json' },
+          withCredentials: true,
+         }
       );
 
       const result = response.data;
@@ -28,8 +31,18 @@ const Login = () => {
         setMessage(result.message);
       }
     } catch (error) {
-      console.error('Error:', error);
-      setMessage('An error occurred. Please try again.');
+      if (!error?.response) {
+        setMessage('No Server Response');
+      }
+      else if (error.response?.status === 400) {
+        setMessage('Missing Username or Password');
+      }
+      else if (error.response?.status === 401) {
+        setMessage('Invalid credentials');
+      }
+      else {
+        setMessage('An error occurred. Please try again.');
+      }
     }
   };
 
@@ -58,6 +71,7 @@ const Login = () => {
         <button type="submit">Login</button>
       </form>
       {message && <p>{message}</p>}
+      <p>Don't have an account? <a href="/register">Register here</a></p> {/* Add this line */}
     </div>
   );
 };
