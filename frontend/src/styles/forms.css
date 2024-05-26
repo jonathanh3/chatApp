@@ -1,0 +1,80 @@
+/* forms.css */
+.container {
+  display: flex;
+  justify-content: center;
+  /* align-items: center; */
+  height: 100vh;
+}
+
+.form-container {
+  width: 60vh;
+  padding: 20px;
+  margin: 0 auto; /* Center the form container horizontally */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box; /* Include padding and border in the element's total width */
+}
+
+.form-container h1 {
+  margin-bottom: 20px;
+  text-align: center;
+  color: #333;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  color: #666;
+}
+
+input[type="text"],
+input[type="password"] {
+  width: 100%; /* Take up 100% of the available width */
+  padding: 10px;
+  margin-bottom: 10px; /* Add some spacing between input fields */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  box-sizing: border-box; /* Include padding and border in the element's total width */
+}
+
+button[type="submit"] {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+.error-message {
+  margin-top: 10px;
+  color: #ff0000;
+  text-align: center;
+}
+
+p {
+  text-align: center;
+}
+
+a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
