@@ -1,6 +1,6 @@
 document.getElementById('register-form').addEventListener('submit', function(event) {
     const password = document.getElementById('password').value;
-    const confirmPassword = document.getElementById('confirm-password').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
 
     if (password !== confirmPassword) {
         // Passwords do not match, prevent form submission
