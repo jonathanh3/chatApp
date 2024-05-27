@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { backendEndpoint } from '../config';
-import '../styles/forms.css';
+import '../styles/Forms.css';
 
 const Register = () => {
   const [username, setUsername] = useState('');
@@ -77,6 +77,9 @@ const Register = () => {
           <button type="submit" className="btn-primary">Register</button>
         </form>
         {message && <p className="error-message">{message}</p>}
+        <p>
+          Already have an account? <a href="/login">Login here</a>
+        </p>
       </div>
     </div>
   );

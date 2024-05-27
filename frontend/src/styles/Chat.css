@@ -1,0 +1,69 @@
+/* src/styles/Chat.css */
+
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 60px); /* Subtract the height of the navbar */
+  overflow: hidden; /* Prevent the entire page from scrolling */
+  padding-top: 60px; /* Offset by the height of the navbar */
+}
+
+.messages-container {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  background: #f9f9f9;
+}
+
+.message-input-container {
+  display: flex;
+  align-items: center; /* Ensure children are vertically centered */
+  padding: 10px;
+  background: #ffffff;
+  border-top: 1px solid #ddd;
+  box-sizing: border-box; /* Ensure padding and border are included in element's total width and height */
+}
+
+.message-input-container input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  margin-right: 10px;
+  font-size: 16px;
+  outline: none;
+  box-shadow: none;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  height: 40px; /* Set a fixed height */
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+
+.message-input-container input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.message-input-container button {
+  padding: 10px 15px;
+  border: none;
+  background: #007bff;
+  color: white;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s, box-shadow 0.3s;
+  height: 40px; /* Match the height of the input field */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+
+.message-input-container button:hover {
+  background-color: #0056b3;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+input[type="text"] {
+  margin-bottom: 0px;
+}

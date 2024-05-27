@@ -6,6 +6,8 @@ import PrivateRoute from './components/PrivateRoute';
 import PublicRoute from './components/PublicRoute';
 import NotFound from './components/NotFound';
 import { AuthProvider } from './contexts/AuthContext';
+import Chat from './components/Chat';
+import './styles/App.css';
 
 const App = () => {
   return (
@@ -14,18 +16,9 @@ const App = () => {
         <div className="App">
           <Routes>
             <Route path="/" element={<Navigate to="/chat" />} />
-            <Route 
-              path="/register" 
-              element={<PublicRoute element={<Register />} />} 
-            />
-            <Route 
-              path="/login" 
-              element={<PublicRoute element={<Login />} />} 
-            />
-            <Route 
-              path="/chat" 
-              element={<PrivateRoute element={<div>Chat Page</div>} />} 
-            />
+            <Route path="/register" element={<PublicRoute element={<Register />} />} />
+            <Route path="/login" element={<PublicRoute element={<Login />} />} />
+            <Route path="/chat" element={<PrivateRoute element={<Chat />} />} />
             <Route path="*" element={<NotFound />} /> {/* Catch-all route */}
           </Routes>
         </div>
