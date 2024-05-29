@@ -59,9 +59,7 @@ const Chat = () => {
     const date = new Date(timestamp);
     const formattedDate = `${date.getDate()}/${date.getMonth() + 1}-${String(date.getFullYear()).slice(2)}:${(date.getHours() < 10 ? '0' : '') + date.getHours()}:${(date.getMinutes() < 10 ? '0' : '') + date.getMinutes()}`;
     return (
-      <em className="timestamp" style={{color: 'grey', float: 'right'}}>
-        {formattedDate}
-      </em>
+      formattedDate
     );
   }
   return (
@@ -70,11 +68,13 @@ const Chat = () => {
       <div className="chat-container">
         <div className="messages-container">
           {messages.map((message, index) => (
-            <div key={index} className="message">
-              <strong>{message.username}: </strong>
-              <span>{message.message}</span>
-              {formatTimestamp(message.timestamp)}
+          <div key={index} className="message">
+            <div>
+              <span className="username">{message.username} </span>
+              <em className="timestamp">{formatTimestamp(message.timestamp)}</em>
             </div>
+            <span className="message-content">{message.message}</span>
+          </div>
           ))}
           <div ref={messagesEndRef} />
         </div>

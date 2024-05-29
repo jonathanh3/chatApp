@@ -63,9 +63,30 @@
   background-color: #0056b3;
   box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
-
 .message {
-  word-wrap: break-word; /* Ensure long messages wrap instead of overflowing horizontally */
+  display: flex; 
+  flex-direction: column;
+  margin-bottom: 5px;
+  background-color: #f0f0f0; /* Background color of the message bubble */
+  border-radius: 10px; /* Rounded corners to create a bubble-like appearance */
+  padding: 10px; /* Padding inside the message bubble */
+  border-bottom: 1px solid   #ccc;
+  overflow: auto; /* Add overflow auto to handle long messages */
+}
+
+.username {
+  font-weight: bold; /* Make the username bold */
+  flex-shrink: 0; /* Prevent the username from shrinking */
+}
+
+.timestamp {
+  color: grey;
+  font-size: 0.8em; /* Adjust font size of the timestamp */
+}
+
+.message-content {
+  margin-top: 5px;
+  word-break: break-word;
 }
 
 input[type="text"] {

@@ -10,7 +10,7 @@ const Navbar = () => {
     <nav className="navbar">
       <div className="navbar-brand">ChatApp</div>
       <div className="navbar-user">
-        <span>Signed in as {user.username}</span>
+        <span>Signed in as <strong>{user.username}</strong></span>
         <button onClick={logout} className="logout-button">Logout</button>
       </div>
     </nav>
