@@ -12,28 +12,22 @@ passport.deserializeUser(async (id, done) => {
     const findUser = await User.findById(id);
     if (!findUser) throw new Error('User not found');
     done(null, findUser);
-  } catch {
+  } catch (err) {
     done(err, null);
   }
-})
+});
 
-export default passport.use(
-  new Strategy(async (username, password, done) => {
-    try {
-      const findUser = await User.findOne({ username });
-      if (!findUser) {
-        // User not found
-        return done(null, false);
-      }
-      if (!comparePassword(password, findUser.password)) {
-        // Password does not match
-        return done(null, false);
-      }
-      // Authentication successful
-      return done(null, findUser);
-    } catch (err) {
-      // Error occurred
-      return done(err, null);
+passport.use(new Strategy(async (username, password, done) => {
+  try {
+    const findUser = await User.findOne({ username });
+    if (!findUser || !comparePassword(password, findUser.password)) {
+      return done(null, false); // User not found or password does not match
     }
-  })
-);
+    // Authentication successful
+    return done(null, findUser);
+  } catch (err) {
+    return done(err, null); // Error occurred
+  }
+}));
+
+export default passport;

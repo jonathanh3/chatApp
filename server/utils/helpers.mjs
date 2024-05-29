@@ -19,3 +19,13 @@ export const getAllUsernames = async() => {
   console.log(usernames);
   return usernames
 }
+
+export const getUsername = async(id) => {
+  try {
+    const findUser = await User.findById(id);
+    if (!findUser) throw new Error('User not found');
+    return findUser.username;
+  } catch (err) {
+    console.log(err);
+  }
+}
