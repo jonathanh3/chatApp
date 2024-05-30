@@ -6,14 +6,19 @@ const Register = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [message, setMessage] = useState('');
+  const [messages, setMessages] = useState([]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (password !== confirmPassword) {
-      setMessage('Passwords do not match');
+      setMessages(['Passwords do not match']);
       return;
     }
+
+    // if (password.length < 8) {
+    //   setMessage('Password must be at least 8 characters long');
+    //   return;
+    // }
 
     try {
       const response = await fetch(`${backendEndpoint}/register`, {
@@ -21,18 +26,18 @@ const Register = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ username, password, confirmPassword }),
+        body: JSON.stringify({ username, password }),
       });
 
       const result = await response.json();
       console.log(result);
       if (result.success) {
-        setMessage('Registration successful! Redirecting to login page...');
+        setMessages(['Registration successful! Redirecting to login page...']);
         setTimeout(() => {
           window.location.href = '/login';
         }, 2000);
       } else {
-        setMessage(result.message);
+        setMessages(result.msg || []);
       }
     } catch (error) {
       console.error('Error:', error);
@@ -76,7 +81,19 @@ const Register = () => {
           </div>
           <button type="submit" className="btn-primary">Register</button>
         </form>
-        {message && <p className="error-message">{message}</p>}
+        {messages && (
+          <div className="form-response-message">
+            <ul>
+              {Array.isArray(messages) ? (
+                messages.map((msg, index) => (
+                  <li key={index}>{msg}</li>
+                ))
+              ) : (
+                <li>{messages}</li>
+              )}
+            </ul>
+          </div>
+        )}
         <p>
           Already have an account? <a href="/login">Login here</a>
         </p>

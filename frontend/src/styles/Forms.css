@@ -52,9 +52,10 @@ button[type="submit"]:hover {
   background-color: #0056b3;
 }
 
-.error-message {
-  margin-top: 10px;
-  color: #ff0000;
+.form-response-message {
+  font-weight: bold;
+  margin-top: 20px;
+  color: #121212;
   text-align: center;
 }
 

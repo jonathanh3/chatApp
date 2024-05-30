@@ -1,34 +1,33 @@
 import { Router } from 'express';
 import { User } from '../schemas/user.mjs';
 import { hashPassword } from '../utils/helpers.mjs';
+import { query, validationResult, checkSchema, matchedData, check } from 'express-validator';
+import { createUserValidationSchema } from '../utils/validationSchemas.mjs';
 
 const router = Router();
 
-router.post('/register', async(req, res) => {
-  const { 
-    body: {
-      username,
-      password,
-      confirmPassword
-    },
-  } = req;
+router.post('/register',
+  checkSchema(createUserValidationSchema),
+  async(req, res) => {
+    const result = validationResult(req);
+    const data = matchedData(req);
+    console.log(req.body);
 
-  const checkUserExist = await User.findOne({ username });
+    if (!result.isEmpty()) return res.status(400).send({ msg: result.array().map(error => error.msg) });
 
-  if (checkUserExist) return res.status(409).json({ success: false, msg: `Username ${username} already taken` });
-  if (password !== confirmPassword) return res.status(400).json({ success: false, error: 'Passwords does not match' });
-  
-  const newUser = new User({
-    username: username,
-    password: hashPassword(password)
-  });
-  try{
-    const savedUser = await newUser.save();  
-    return res.status(201).json({ success: true, msg: `User ${username} successfully created`});
-  } catch(err) {
-      console.log(err);
-      return res.sendStatus(400);
-  }
+    const checkUserExist = await User.findOne({ username: data.username });
+
+    if (checkUserExist) return res.status(409).json({ success: false, msg: `Username ${data.username} already taken` });
+    
+    data.password = hashPassword(data.password);
+    const newUser = new User(data);
+    try{
+      const savedUser = await newUser.save();  
+      return res.status(201).json({ success: true, msg: `User ${data.username} successfully created`});
+    } catch(err) {
+        console.log(err);
+        return res.sendStatus(400);
+    }
 })
 
 export default router;

@@ -29,7 +29,7 @@ const Login = () => {
           window.location.href = '/chat';
         }, 0);
       } else {
-        setMessage(result.message);
+        setMessage(result.msg);
       }
     } catch (error) {
       if (!error?.response) {
@@ -71,7 +71,7 @@ const Login = () => {
           </div>
           <button type="submit" className="btn-primary">Login</button>
         </form>
-        {message && <p className="error-message">{message}</p>}
+        {message && <p className="form-response-message">{message}</p>}
         <p>
           Don't have an account? <a href="/register">Register here</a>
         </p>
