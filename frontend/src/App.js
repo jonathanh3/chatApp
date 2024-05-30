@@ -13,15 +13,13 @@ const App = () => {
   return (
     <AuthProvider>
       <Router>
-        <div className="App">
-          <Routes>
-            <Route path="/" element={<Navigate to="/chat" />} />
-            <Route path="/register" element={<PublicRoute element={<Register />} />} />
-            <Route path="/login" element={<PublicRoute element={<Login />} />} />
-            <Route path="/chat" element={<PrivateRoute element={<Chat />} />} />
-            <Route path="*" element={<NotFound />} /> {/* Catch-all route */}
-          </Routes>
-        </div>
+        <Routes>
+          <Route path="/" element={<Navigate to="/chat" />} />
+          <Route path="/register" element={<PublicRoute element={<Register />} />} />
+          <Route path="/login" element={<PublicRoute element={<Login />} />} />
+          <Route path="/chat" element={<PrivateRoute element={<Chat />} />} />
+          <Route path="*" element={<NotFound />} /> {/* Catch-all route */}
+        </Routes>
       </Router>
     </AuthProvider>
   );
