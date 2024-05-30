@@ -84,3 +84,11 @@ docker run --name chat-app-frontend \
   -p <port>:<port> \
   chat-app-frontend:<version>
 ```
+
+# Dev
+
+```
+cd mongo && docker-compose up -d          # db
+cd backend && npm i && npm run start:dev  # backend
+cd frontend && npm i && npm start         # frontend
+```
