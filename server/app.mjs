@@ -1,6 +1,5 @@
 import express from 'express';
 import passport from 'passport';
-import mongoose from 'mongoose';
 import cors from 'cors';
 import { createServer } from 'http';
 
@@ -11,12 +10,6 @@ import routes from './routes/index.mjs';
 const app = express();
 const server = createServer(app);
 const PORT = process.env.PORT || 3000;
-
-// Connect to DB
-mongoose.connect('mongodb://localhost:27017/chat-app')
-  .then(() => console.log('Connected to Database'))
-  .catch((err) => console.log(err));
-
 
 // Initialize middlewares
 app.use(cors(corsConfig));
