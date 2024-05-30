@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect, useContext } from 'react';
+import { createContext, useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { backendEndpoint } from '../config';
 
@@ -24,6 +24,10 @@ export const AuthProvider = ({ children }) => {
         setIsAuthenticated(false);
         setUser(null);
       } finally {
+        // // Simulate a delay of 2 seconds before setting loading to false
+        // setTimeout(() => {
+        //   setLoading(false);
+        // }, 2000); // Adjust the timeout value as needed
         setLoading(false);
       }
     };

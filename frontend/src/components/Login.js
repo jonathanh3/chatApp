@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { backendEndpoint } from '../config';
 import '../styles/Forms.css';
+import LoadingSpinner from './Loading';
 
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -45,37 +47,36 @@ const Login = () => {
   };
 
   return (
-    <div className='container'>
-      <div className="form-container">
-        <h1>Login</h1>
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label htmlFor="username">Username</label>
-            <input
-              type="text"
-              id="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
-          <button type="submit" className="btn-primary">Login</button>
-        </form>
-        {message && <p className="form-response-message">{message}</p>}
-        <p>
-          Don't have an account? <a href="/register">Register here</a>
-        </p>
-      </div>
+    <div className="form-container">
+      <h1>Login</h1>
+      <form onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label htmlFor="username">Username</label>
+          <input
+            type="text"
+            id="username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </div>
+        <button type="submit" className="btn-primary">Login</button>
+      </form>
+      {message && <p className="form-response-message">{message}</p>}
+      <p>
+        Don't have an account? <a href="/register">Register here</a>
+      </p>
+      {loading && <LoadingSpinner />}
     </div>
   );
 };
