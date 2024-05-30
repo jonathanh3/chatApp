@@ -3,7 +3,7 @@ import passport from '../strategies/local.mjs';
 
 const router = Router();
 
-router.post('/auth/login', (req, res, next) => {
+router.post('/api/auth/login', (req, res, next) => {
   passport.authenticate('local', (err, user) => {
     if (err) {
       // Internal server error
@@ -25,7 +25,7 @@ router.post('/auth/login', (req, res, next) => {
   })(req, res, next);
 });
 
-router.get('/auth/status', (req, res) => {
+router.get('/api/auth/status', (req, res) => {
   req.sessionStore.get(req.session.id, (err, sessionData) => {
     if (err) {
       console.log(err);
@@ -37,7 +37,7 @@ router.get('/auth/status', (req, res) => {
     res.status(401).send({ msg: 'Not authenticated'});
 })
 
-router.post('/auth/logout', (req, res) => {
+router.post('/api/auth/logout', (req, res) => {
   if (!req.user) return res.sendStatus(401);
 
   req.logout((err) => {

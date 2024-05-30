@@ -12,7 +12,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const response = await axios.get(`${backendEndpoint}/auth/status`, { withCredentials: true });
+        const response = await axios.get(`${backendEndpoint}/api/auth/status`, { withCredentials: true });
         if (response.status === 200) {
           setIsAuthenticated(true);
           setUser(response.data.user); // Assuming your backend sends user data
@@ -33,7 +33,7 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      await axios.post(`${backendEndpoint}/auth/logout`, {}, { withCredentials: true });
+      await axios.post(`${backendEndpoint}/api/auth/logout`, {}, { withCredentials: true });
       setIsAuthenticated(false);
       setUser(null);
     } catch (err) {

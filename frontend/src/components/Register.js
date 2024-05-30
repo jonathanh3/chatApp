@@ -21,7 +21,7 @@ const Register = () => {
     // }
 
     try {
-      const response = await fetch(`${backendEndpoint}/register`, {
+      const response = await fetch(`${backendEndpoint}/api/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -3,7 +3,7 @@ import MongoStore from 'connect-mongo';
 import session from 'express-session';
 
 // Connect to DB
-mongoose.connect('mongodb://localhost:27017/chat-app')
+mongoose.connect(process.env.MONGODB_ENDPOINT || 'mongodb://localhost:27017/chat-app')
   .then(() => console.log('Connected to Database'))
   .catch((err) => console.log(err));
 
@@ -26,7 +26,7 @@ const wrap = expressMiddleware => (socket, next) =>
   expressMiddleware(socket.request, {}, next);
 
 const corsConfig = {
-  origin: 'http://192.168.37.100:8000', // Replace with your frontend domain
+  origin: process.env.CORS_FRONTEND || 'http://localhost:3000', // Replace with your frontend domain
   credentials: true
 };
 

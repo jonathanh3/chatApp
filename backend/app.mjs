@@ -9,7 +9,7 @@ import routes from './routes/index.mjs';
 
 const app = express();
 const server = createServer(app);
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 
 // Initialize middlewares
 app.use(cors(corsConfig));

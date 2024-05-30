@@ -6,7 +6,7 @@ import { createUserValidationSchema } from '../utils/validationSchemas.mjs';
 
 const router = Router();
 
-router.post('/register',
+router.post('/api/register',
   checkSchema(createUserValidationSchema),
   async(req, res) => {
     const result = validationResult(req);

@@ -1,2 +1,2 @@
 // src/config.js
-export const backendEndpoint = 'http://192.168.37.100:3000'
+export const backendEndpoint = process.env.REACT_APP_BACKEND_ENDPOINT || 'http://localhost:3001'

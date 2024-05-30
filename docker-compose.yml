@@ -1,0 +1,46 @@
+volumes:
+  mongo-data:
+
+services:
+  mongo:
+    image: mongo:7.0.9
+    container_name: chat-app-db
+    # environment:
+    #   - MONGO_INITDB_ROOT_USERNAME=
+    #   - MONGO_INITDB_ROOT_PASSWORD=
+    ports:
+      - 27017:27017
+    volumes:
+      - mongo-data:/data/db
+
+  mongo-express:
+    image: mongo-express:1.0.2-18-alpine3.19
+    container_name: chat-app-mongo-express
+    depends_on:
+      - mongo
+    environment:
+      - ME_CONFIG_MONGODB_SERVER=mongo
+      - ME_CONFIG_BASICAUTH_USERNAME=johe
+      - ME_CONFIG_BASICAUTH_PASSWORD=wazza
+    ports:
+      - 8081:8081
+
+  chat-app-backend:
+    container_name: chat-app-backend
+    image: chat-app-backend:0.2.0
+    depends_on:
+      - mongo
+    environment:
+      - PORT=3001
+      - CORS_FRONTEND=https://chat.hellnet.se
+      - MONGODB_ENDPOINT=mongodb://chat-app-db:27017
+    ports:
+      - 3001:3001
+
+  chat-app-frontend:
+    container_name: chat-app-frontend
+    image: chat-app-frontend:0.2.0
+    depends_on:
+      - chat-app-backend
+    ports:
+      - 3000:3000
