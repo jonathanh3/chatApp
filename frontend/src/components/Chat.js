@@ -3,6 +3,7 @@ import { io } from 'socket.io-client';
 import { useAuth } from '../contexts/AuthContext';
 import Navbar from './Navbar';
 import '../styles/Chat.css'; // Ensure this path is correct
+import { backendEndpoint } from '../config';
 
 const Chat = () => {
   const { user } = useAuth();
@@ -12,10 +13,10 @@ const Chat = () => {
   const socketRef = useRef(null);
 
   useEffect(() => {
-    socketRef.current = io('http://192.168.37.100:3000', {
+    socketRef.current = io(backendEndpoint, {
       withCredentials: true
     });
-        
+
     socketRef.current.on('connect', () => {
       console.log('Connected to backend');
     });
@@ -68,25 +69,25 @@ const Chat = () => {
       <div className="chat-container">
         <div className="messages-container">
           {messages.map((message, index) => (
-          <div key={index} className="message">
-            <div>
-              <span className="username">{message.username} </span>
-              <em className="timestamp">{formatTimestamp(message.timestamp)}</em>
+            <div key={index} className="message">
+              <div>
+                <span className="username">{message.username} </span>
+                <em className="timestamp">{formatTimestamp(message.timestamp)}</em>
+              </div>
+              <span className="message-content">{message.message}</span>
             </div>
-            <span className="message-content">{message.message}</span>
-          </div>
           ))}
           <div ref={messagesEndRef} />
-        </div>
-        <div className="message-input-container">
-          <input
-            type="text"
-            value={newMessage}
-            onChange={(e) => setNewMessage(e.target.value)}
-            onKeyDown={handleKeyDown}
-            placeholder="Type your message..."
-          />
-          <button onClick={handleSendMessage}>Send</button>
+      </div>
+      <div className="message-input-container">
+        <input
+          type="text"
+          value={newMessage}
+          onChange={(e) => setNewMessage(e.target.value)}
+          onKeyDown={handleKeyDown}
+          placeholder="Type your message..."
+        />
+        <button onClick={handleSendMessage}>Send</button>
         </div>
       </div>
     </div>
