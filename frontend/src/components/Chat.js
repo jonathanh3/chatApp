@@ -13,6 +13,8 @@ const Chat = () => {
   const socketRef = useRef(null);
 
   useEffect(() => {
+    window.addEventListener('beforeunload', handleUnload);
+
     socketRef.current = io(backendEndpoint, {
       withCredentials: true
     });
@@ -35,9 +37,16 @@ const Chat = () => {
     });
 
     return () => {
+      window.removeEventListener('beforeunload', handleUnload);
       socketRef.current.disconnect();
-    };
+  } ;
   }, []);
+
+  // Function to handle the beforeunload event
+  const handleUnload = () => {
+    // Disconnect the socket when the user navigates away
+    socketRef.current.disconnect();
+  };
 
   const handleSendMessage = () => {
     if (newMessage.trim()) {
