@@ -1,6 +1,7 @@
 // src/components/Navbar.js
 import React from 'react';
 import { useAuth } from '../contexts/AuthContext';
+import { Link } from 'react-router-dom';
 import '../styles/Navbar.css';
 
 const Navbar = () => {
@@ -8,7 +9,7 @@ const Navbar = () => {
 
   return (
     <nav className="navbar">
-      <div className="navbar-brand">ChatApp</div>
+      <Link to="/" className="navbar-brand">ChatApp</Link> 
       <div className="navbar-user">
         <span>Signed in as <strong>{user.username}</strong></span>
         <button onClick={logout} className="logout-button">Logout</button>

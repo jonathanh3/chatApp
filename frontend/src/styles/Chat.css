@@ -4,8 +4,8 @@
   display: flex;
   flex-direction: column;
   height: calc(100vh - 60px); /* Subtract the height of the navbar */
-  overflow: hidden; /* Prevent the entire page from scrolling */
   padding-top: 60px; /* Offset by the height of the navbar */
+  overflow: hidden; /* Prevent the entire page from scrolling */
 }
 
 .messages-container {
@@ -63,6 +63,7 @@
   background-color: #0056b3;
   box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
+
 .message {
   display: flex; 
   flex-direction: column;

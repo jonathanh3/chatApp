@@ -1,3 +1,4 @@
+// src/contexts/AuthContext.js
 import React, { createContext, useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { backendEndpoint } from '../config';
@@ -16,13 +17,16 @@ export const AuthProvider = ({ children }) => {
         if (response.status === 200) {
           setIsAuthenticated(true);
           setUser(response.data.user); // Assuming your backend sends user data
+          console.log("User authenticated:", response.data.user);
         } else {
           setIsAuthenticated(false);
           setUser(null);
+          console.log("User not authenticated");
         }
       } catch (err) {
         setIsAuthenticated(false);
         setUser(null);
+        console.log("Auth check failed:", err);
       } finally {
         setLoading(false);
       }
