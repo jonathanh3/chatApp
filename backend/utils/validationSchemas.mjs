@@ -27,3 +27,11 @@ export const createUserValidationSchema = {
     }
   }
 };
+
+export const createRoomValidationSchema = {
+  name: {
+    notEmpty: {
+      errorMessage: 'Name cannot be empty',
+    },
+  }
+};
