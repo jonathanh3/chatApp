@@ -14,7 +14,8 @@ export const AuthProvider = ({ children }) => {
       try {
         const response = await axios.get(`${backendEndpoint}/api/auth/status`, { withCredentials: true });
         if (response.status === 200) {
-          setUser({ name: response.data.user, isAuthenticated: true });
+          const username = response.data.user.username;
+          setUser({ name: username, isAuthenticated: true });
           console.log("User authenticated:", response.data.user);
         }
       } catch (err) {

@@ -7,7 +7,7 @@ import PublicRoute from './components/PublicRoute';
 import NotFound from './components/pages/NotFound';
 import { AuthProvider } from './contexts/AuthContext';
 import Chat from './components/pages/Chat';
-import Index from './components/pages/Index';
+import Home from './components/pages/Home';
 import Navbar from './components/Navbar'; // Import the Navbar component
 
 const App = () => {
@@ -17,7 +17,7 @@ const App = () => {
         <Router>
           <Routes>
             <Route element={<Navbar />}>
-              <Route path="/" element={<PrivateRoute element={<Index />} />} />
+              <Route path="/" element={<PrivateRoute element={<Home />} />} />
               <Route path="/register" element={<PublicRoute element={<Register />} />} />
               <Route path="/login" element={<PublicRoute element={<Login />} />} />
               <Route path="/chat/:roomName" element={<PrivateRoute element={<Chat />} />} />

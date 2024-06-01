@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom'; // Import useNavigate
 import { backendEndpoint } from '../../config';
-import '../../styles/Index.css'
+import '../../styles/Home.css'
 
-const Index = () => {
+const Home = () => {
   const [roomName, setRoomName] = useState('');
   const [rooms, setRooms] = useState([]);
   const navigate = useNavigate(); // Initialize navigate
@@ -56,7 +56,7 @@ const Index = () => {
   };
 
   return (
-    <div className='page-container'>
+    <>
       <div>
         <input
           type="text"
@@ -77,8 +77,8 @@ const Index = () => {
           ))}
         </ul>
       </div>
-    </div>
+    </>
   );
 };
 
-export default Index;
+export default Home;
