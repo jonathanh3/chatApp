@@ -24,3 +24,11 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+main {
+  flex: 1; /* Take up remaining vertical space */
+  display: flex; /* Use flexbox */
+  flex-direction: column; /* Arrange children vertically */
+  padding-top: 60px; /* Offset by the height of the navbar */
+  margin-top: 10px;
+}

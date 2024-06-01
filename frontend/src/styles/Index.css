@@ -1,9 +1,6 @@
 .page-container {
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 60px);
-  padding-top: 60px;
-  margin-top: 10px;
 }
 
 input[type="text"]{

@@ -7,22 +7,26 @@ import PublicRoute from './components/PublicRoute';
 import NotFound from './components/pages/NotFound';
 import { AuthProvider } from './contexts/AuthContext';
 import Chat from './components/pages/Chat';
-import './styles/App.css';
-import Index from './components/pages/Index'
+import Index from './components/pages/Index';
+import Navbar from './components/Navbar'; // Import the Navbar component
 
 const App = () => {
   return (
-    <AuthProvider>
-      <Router>
-        <Routes>
-          <Route path="/" element={<PrivateRoute element={<Index />} />} />
-          <Route path="/register" element={<PublicRoute element={<Register />} />} />
-          <Route path="/login" element={<PublicRoute element={<Login />} />} />
-          <Route path="/chat/:roomName" element={<PrivateRoute element={<Chat />} />} /> {/* Route for Room */}
-          <Route path="*" element={<NotFound />} /> {/* Catch-all route */}
-        </Routes>
-      </Router>
-    </AuthProvider>
+    <div className="App">
+      <AuthProvider>
+        <Router>
+          <Routes>
+            <Route element={<Navbar />}>
+              <Route path="/" element={<PrivateRoute element={<Index />} />} />
+              <Route path="/register" element={<PublicRoute element={<Register />} />} />
+              <Route path="/login" element={<PublicRoute element={<Login />} />} />
+              <Route path="/chat/:roomName" element={<PrivateRoute element={<Chat />} />} />
+              <Route path="*" element={<NotFound />} /> {/* Catch-all route */}
+            </Route>
+          </Routes>
+        </Router>
+      </AuthProvider>
+    </div>
   );
 };
 

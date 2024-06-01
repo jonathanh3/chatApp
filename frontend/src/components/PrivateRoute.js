@@ -2,25 +2,19 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import Navbar from './Navbar';
 
 const PrivateRoute = ({ element }) => {
-  const { isAuthenticated, loading } = useAuth();
+  const { user, loading } = useAuth();
 
   if (loading) {
     return <div>Loading...</div>;
   }
 
-  if (!isAuthenticated) {
+  if (!user.isAuthenticated) {
     return <Navigate to="/login" />;
   }
 
-  return (
-    <>
-      <Navbar />
-      {element}
-    </>
-  );
+  return element;
 };
 
 export default PrivateRoute;

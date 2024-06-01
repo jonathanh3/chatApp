@@ -6,8 +6,7 @@ import { backendEndpoint } from '../config';
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState({ name: "", isAuthenticated: false });
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -15,17 +14,10 @@ export const AuthProvider = ({ children }) => {
       try {
         const response = await axios.get(`${backendEndpoint}/api/auth/status`, { withCredentials: true });
         if (response.status === 200) {
-          setIsAuthenticated(true);
-          setUser(response.data.user); // Assuming your backend sends user data
+          setUser({ name: response.data.user, isAuthenticated: true });
           console.log("User authenticated:", response.data.user);
-        } else {
-          setIsAuthenticated(false);
-          setUser(null);
-          console.log("User not authenticated");
         }
       } catch (err) {
-        setIsAuthenticated(false);
-        setUser(null);
         console.log("Auth check failed:", err);
       } finally {
         setLoading(false);
@@ -38,15 +30,14 @@ export const AuthProvider = ({ children }) => {
   const logout = async () => {
     try {
       await axios.post(`${backendEndpoint}/api/auth/logout`, {}, { withCredentials: true });
-      setIsAuthenticated(false);
-      setUser(null);
+      setUser({...user, isAuthenticated: false})
     } catch (err) {
       console.error("Failed to logout", err);
     }
   };
 
   return (
-    <AuthContext.Provider value={{ user, isAuthenticated, loading, logout }}>
+    <AuthContext.Provider value={{ user, loading, logout }}>
       {children}
     </AuthContext.Provider>
   );

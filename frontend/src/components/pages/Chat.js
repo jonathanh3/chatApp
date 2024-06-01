@@ -106,31 +106,28 @@ const Chat = () => {
   }
 
   return (
-    <div>
-      <Navbar />
-      <div className="chat-container">
-        <div className="messages-container">
-          {messages.map((message, index) => (
-            <div key={index} className="message">
-              <div>
-                <span className="username">{message.username} </span>
-                <em className="timestamp">{formatTimestamp(message.timestamp)}</em>
-              </div>
-              <span className="message-content">{message.message}</span>
+    <div className="chat-container">
+      <div className="messages-container">
+        {messages.map((message, index) => (
+          <div key={index} className="message">
+            <div>
+              <span className="username">{message.username} </span>
+              <em className="timestamp">{formatTimestamp(message.timestamp)}</em>
             </div>
-          ))}
-          <div ref={messagesEndRef} />
-        </div>
-        <div className="message-input-container">
-          <input
-            type="text"
-            value={newMessage}
-            onChange={(e) => setNewMessage(e.target.value)}
-            onKeyDown={handleKeyDown}
-            placeholder="Type your message..."
-          />
-          <button onClick={handleSendMessage}>Send</button>
-        </div>
+            <span className="message-content">{message.message}</span>
+          </div>
+        ))}
+        <div ref={messagesEndRef} />
+      </div>
+      <div className="message-input-container">
+        <input
+          type="text"
+          value={newMessage}
+          onChange={(e) => setNewMessage(e.target.value)}
+          onKeyDown={handleKeyDown}
+          placeholder="Type your message..."
+        />
+        <button onClick={handleSendMessage}>Send</button>
       </div>
     </div>
   );
