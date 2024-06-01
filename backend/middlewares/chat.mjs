@@ -4,35 +4,36 @@ import { getUsername } from '../utils/helpers.mjs';
 
 let io;
 let connectedUsers = {};
-let messages = [];
+let rooms = {}; // Store room information including messages
 
 function emitActiveUsersList() {
-    const uniqueUsernames = [...new Set(Object.values(connectedUsers))];
-    io.emit('updateActiveUsers', uniqueUsernames);
+  const uniqueUsernames = [...new Set(Object.values(connectedUsers))];
+  io.emit('updateActiveUsers', uniqueUsernames);
 }
 
-function emitPreviousMessages(socket) {
-    socket.emit('previousMessages', messages);
+function emitPreviousMessages(socket, roomName) {
+  const messages = rooms[roomName].messages;
+  socket.emit('previousMessages', messages);
 }
 
-function emitChatMessage(socket) {
-    socket.on('chatMessage', (message) => {
-        const timestamp = new Date().toISOString(); // Use ISO string for timestamp
-        const username = connectedUsers[socket.id];
-        const msgObj = { timestamp, username, message };
-        console.log(`Chat message - User ${username}: ${message}`);
-        messages.push(msgObj);
-        io.emit('chatMessage', msgObj); // Broadcast message to all clients
-    });
+function emitChatMessage(socket, roomName) {
+  socket.on('chatMessage', (message) => {
+    const timestamp = new Date().toISOString(); // Use ISO string for timestamp
+    const username = connectedUsers[socket.id];
+    const msgObj = { timestamp, username, message };
+    console.log(`Chat message - User ${username}: ${message}`);
+    rooms[roomName].messages.push(msgObj);
+    io.to(roomName).emit('chatMessage', msgObj); // Broadcast message to all clients in the room
+  });
 }
 
 function handleDisconnect(socket) {
-    socket.on('disconnect', () => {
-        const username = connectedUsers[socket.id];
-        delete connectedUsers[socket.id];
-        emitActiveUsersList();
-        console.log(`${username} (${socket.id}) disconnected`);
-    });
+  socket.on('disconnect', () => {
+    const username = connectedUsers[socket.id];
+    delete connectedUsers[socket.id];
+    emitActiveUsersList();
+    console.log(`${username} (${socket.id}) disconnected`);
+  });
 }
 
 export default function initializeChatSocket(server, sessionMiddleware) {
@@ -47,17 +48,33 @@ export default function initializeChatSocket(server, sessionMiddleware) {
   io.use(wrap(sessionMiddleware));
 
   io.on('connection', async (socket) => {
-    const sessionId = socket.request.session?.passport?.user; 
+    const sessionId = socket.request.session?.passport?.user;
     if (sessionId) {
       const sessionUsername = await getUsername(sessionId);
       const userSocketId = socket.id;
       connectedUsers[userSocketId] = sessionUsername;
 
+      // const keysAndValues = Object.keys(connectedUsers).map(key => ({ key: key, value: connectedUsers[key] }));
       console.log(`${sessionUsername} (${userSocketId}) connected`);
+      // console.log('Connected users:');
+      // keysAndValues.forEach(pair => {
+      //   console.log(`${pair.key}: ${pair.value}`);
+      // });
 
-      emitActiveUsersList();
-      emitPreviousMessages(socket);
-      emitChatMessage(socket);
+
+      // Joining a specific chat room
+      socket.on('joinRoom', (roomName) => {
+        console.log(`User ${sessionUsername} tries to join chatroom ${roomName}`);
+        socket.join(roomName);
+        if (!rooms[roomName]) {
+          rooms[roomName] = { users: [], messages: [] };
+        }
+        rooms[roomName].users.push(sessionUsername);
+        emitPreviousMessages(socket, roomName);
+        emitActiveUsersList();
+        emitChatMessage(socket, roomName);
+      });
+
       handleDisconnect(socket);
     }
   });

@@ -33,5 +33,9 @@ export const createRoomValidationSchema = {
     notEmpty: {
       errorMessage: 'Name cannot be empty',
     },
-  }
+    matches: {
+      options: /^[a-zA-Z0-9\s]*$/,
+      errorMessage: 'Name can only contain letters and numbers',
+    },
+  },
 };

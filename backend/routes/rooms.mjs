@@ -31,7 +31,7 @@ router.post('/api/rooms',
     const data = matchedData(req);
 
     if (!result.isEmpty()) {
-      return res.status(400).send({ msg: result.array().map(error => error.msg) });
+      return res.status(400).send({ success: false, msg: result.array().map(error => error.msg) });
     }
 
     const { name } = data;
@@ -39,7 +39,7 @@ router.post('/api/rooms',
     try {
       const existingRoom = await Room.findOne({ name });
       if (existingRoom) {
-        return res.status(400).json({ success: false, message: 'Chat room already exists' });
+        return res.status(409).json({ success: false, message: 'Chat room already exists' });
       }
       
       const newRoom = new Room({
@@ -51,6 +51,22 @@ router.post('/api/rooms',
       res.status(201).json({ success: true, message: 'Chat room created', room: newRoom });
     } catch (error) {
       console.error(error);
+      res.status(500).json({ success: false, message: 'Server Error' });
+    }
+});
+
+router.get('/api/rooms/:name',
+  checkAuthentication,
+  async (req, res) => {
+    try {
+      const roomName = req.params.name;
+      const room = await Room.findOne({ name: roomName });
+      if (room) {
+        res.status(200).json({ success: true, message: 'Room exists' });
+      } else {
+        res.status(404).json({ success: false, message: 'Room not found' });
+      }
+    } catch (error) {
       res.status(500).json({ success: false, message: 'Server Error' });
     }
 });

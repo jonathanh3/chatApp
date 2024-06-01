@@ -1,0 +1,38 @@
+.page-container {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 60px);
+  padding-top: 60px;
+  margin-top: 10px;
+}
+
+input[type="text"]{
+  width: 100%; /* Take up 100% of the available width */
+  padding: 10px;
+  margin-bottom: 10px; /* Add some spacing between input fields */
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 16px;
+  box-sizing: border-box; /* Include padding and border in the element's total width */
+}
+
+button {
+  padding: 5px 10px;
+  border: none;
+  background: #0dc61f;
+  color: white;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s, box-shadow 0.3s;
+  height: 40px; /* Match the height of the input field */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+
+button:hover {
+  background-color: #058913;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}

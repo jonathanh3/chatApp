@@ -26,7 +26,7 @@ const Login = () => {
       if (result.success) {
         // setMessage('Login successful! Redirecting to chat page...');
         setTimeout(() => {
-          window.location.href = '/chat';
+          window.location.href = '/';
         }, 0);
       } else {
         setMessage(result.msg);
