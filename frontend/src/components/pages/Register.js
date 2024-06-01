@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { backendEndpoint } from '../config';
-import '../styles/Forms.css';
+import { backendEndpoint } from '../../config';
+import '../../styles/Forms.css';
 
 const Register = () => {
   const [username, setUsername] = useState('');

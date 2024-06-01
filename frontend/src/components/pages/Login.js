@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { backendEndpoint } from '../config';
-import '../styles/Forms.css';
+import { backendEndpoint } from '../../config';
+import '../../styles/Forms.css';
 
 const Login = () => {
   const [username, setUsername] = useState('');

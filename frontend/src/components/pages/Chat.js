@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react'; // Import useCallback
 import { io } from 'socket.io-client';
-import { useAuth } from '../contexts/AuthContext';
-import Navbar from './Navbar';
+import { useAuth } from '../../contexts/AuthContext';
+import Navbar from '../Navbar';
 import { useParams, useNavigate } from 'react-router-dom'; // Import useParams and useNavigate
-import '../styles/App.css';
-import '../styles/Chat.css';
-import { backendEndpoint } from '../config';
+import '../../styles/App.css';
+import '../../styles/Chat.css';
+import { backendEndpoint } from '../../config';
 import axios from 'axios';
 
 const Chat = () => {

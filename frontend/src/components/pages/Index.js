@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom'; // Import useNavigate
-import { backendEndpoint } from '../config';
-import '../styles/Index.css'
+import { backendEndpoint } from '../../config';
+import '../../styles/Index.css'
 
 const Index = () => {
   const [roomName, setRoomName] = useState('');

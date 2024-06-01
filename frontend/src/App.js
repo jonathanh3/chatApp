@@ -1,14 +1,14 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Register from './components/Register';
-import Login from './components/Login';
+import Register from './components/pages/Register';
+import Login from './components/pages/Login';
 import PrivateRoute from './components/PrivateRoute';
 import PublicRoute from './components/PublicRoute';
-import NotFound from './components/NotFound';
+import NotFound from './components/pages/NotFound';
 import { AuthProvider } from './contexts/AuthContext';
-import Chat from './components/Chat';
+import Chat from './components/pages/Chat';
 import './styles/App.css';
-import Index from './components/Index'
+import Index from './components/pages/Index'
 
 const App = () => {
   return (
