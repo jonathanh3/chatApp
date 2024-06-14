@@ -35,20 +35,6 @@ const Home = () => {
     }
   };
 
-  const handleJoinRoom = async (roomName) => {
-    try {
-      const response = await axios.get(`${backendEndpoint}/api/rooms/${roomName}`, { withCredentials: true });
-      if (response.data.success) {
-        navigate(`/chat/${roomName}`); // Navigate to the chat room
-      } else {
-        alert('Room does not exist');
-      }
-    } catch (error) {
-      console.error('Error checking room existence', error);
-      alert('Error checking room existence');
-    }
-  };
-
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
       handleCreateRoom();
@@ -71,7 +57,7 @@ const Home = () => {
         <h3>Available Chat Rooms:</h3>
         <ul>
           {rooms.map((room, index) => (
-            <li key={index} onClick={() => handleJoinRoom(room)}>
+            <li key={index}>
               <Link to={`/chat/${room}`}>{room}</Link>
             </li>
           ))}
