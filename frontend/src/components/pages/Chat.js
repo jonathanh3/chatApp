@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { io } from 'socket.io-client';
 import { useAuth } from '../../contexts/AuthContext';
-import Navbar from '../Navbar';
 import { useParams, useNavigate } from 'react-router-dom';
 import '../../styles/App.css';
 import '../../styles/Chat.css';
