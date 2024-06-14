@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { io } from 'socket.io-client';
 import { useAuth } from '../../contexts/AuthContext';
 import { useParams, useNavigate } from 'react-router-dom';
-import '../../styles/App.css';
 import '../../styles/Chat.css';
 import { backendEndpoint } from '../../config';
 import axios from 'axios';
