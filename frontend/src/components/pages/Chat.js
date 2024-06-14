@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react'; // Import useCallback
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { io } from 'socket.io-client';
 import { useAuth } from '../../contexts/AuthContext';
 import Navbar from '../Navbar';
-import { useParams, useNavigate } from 'react-router-dom'; // Import useParams and useNavigate
+import { useParams, useNavigate } from 'react-router-dom';
 import '../../styles/App.css';
 import '../../styles/Chat.css';
 import { backendEndpoint } from '../../config';
@@ -41,7 +41,7 @@ const Chat = () => {
     } else {
       checkRoomExists();
     }
-  }, [roomName, navigate, checkRoomExists]); // Include checkRoomExists in the dependency array
+  }, [roomName, navigate, checkRoomExists]);
 
   useEffect(() => {
     if (isValidRoom) {
@@ -53,7 +53,7 @@ const Chat = () => {
 
       socketRef.current.on('connect', () => {
         console.log('Connected to backend socket');
-        socketRef.current.emit('joinRoom', roomName); // Emit joinRoom event
+        socketRef.current.emit('joinRoom', roomName);
       });
 
       socketRef.current.on('previousMessages', (previousMessages) => {

@@ -1,4 +1,3 @@
-// src/components/Navbar.js
 import React from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { Outlet, Link } from 'react-router-dom';
